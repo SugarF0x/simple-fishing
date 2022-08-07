@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { NuxtIcon, Button } from '#components'
+import { useFetch } from '#app'
+
+const { data, pending } = await useFetch('/api/user/me')
 </script>
 
 <template>
@@ -7,7 +10,10 @@ import { NuxtIcon, Button } from '#components'
     i am a test page
     <nuxt-icon name="fishing-hook" />
 
-    <Button> i am a button </Button>
+    <Button @click="fetch"> i am a button </Button>
+    <div v-if="!pending" class="mt-8 text-cyan-300">
+      {{ JSON.stringify(data, null, 2) }}
+    </div>
   </div>
 </template>
 
