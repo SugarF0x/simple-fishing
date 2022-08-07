@@ -2,7 +2,7 @@
 import { NuxtIcon, Button } from '#components'
 import { useFetch } from '#app'
 
-const { data, pending } = await useFetch('/api/user/me')
+const { data, pending, refresh, error } = await useFetch('/api/user/me')
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const { data, pending } = await useFetch('/api/user/me')
     i am a test page
     <nuxt-icon name="fishing-hook" />
 
-    <Button @click="fetch"> i am a button </Button>
+    <Button @click="refresh"> i am a button </Button>
     <div v-if="!pending" class="mt-8 text-cyan-300">
       {{ JSON.stringify(data, null, 2) }}
     </div>

@@ -4,8 +4,8 @@ export interface UserGetResponse {
   user: string
 }
 
-export default defineEventHandler<UserGetResponse>(() => {
+export default defineEventHandler<UserGetResponse>((event) => {
   return {
-    user: 'dev-user'
+    user: event.context.auth.user
   }
 })
