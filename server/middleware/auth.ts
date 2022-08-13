@@ -1,8 +1,11 @@
 import { useCookie, sendRedirect, defineMiddleware } from 'h3'
 
 export default defineMiddleware(async (event) => {
-  if (event.req.originalUrl.split('/').slice(-1)[0].includes('.')) return
-  if (event.req.originalUrl.includes('user')) return
+  const url = event.req.originalUrl
+
+  if (url === '/') return
+  if (url.includes('/user')) return
+  if (url === '/manifest.json') return
 
   const token = useCookie(event, 'token')
   if (!token) {
