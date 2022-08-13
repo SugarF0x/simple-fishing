@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { NuxtIcon, Button } from '#components'
+import { NuxtIcon, Button, IonPage } from '#components'
 import { useFetch } from '#app'
+import { useIonRouter } from '#imports'
+
+const router = useIonRouter()
 
 const { data, pending, refresh, error } = await useFetch('/api/user/me')
 </script>
 
 <template>
-  <div class="wrapper">
+  <ion-page class="wrapper">
     i am a test page
     <nuxt-icon name="fishing-hook" />
 
@@ -14,7 +17,11 @@ const { data, pending, refresh, error } = await useFetch('/api/user/me')
     <div v-if="!pending" class="mt-8 text-cyan-300">
       {{ JSON.stringify(data, null, 2) }}
     </div>
-  </div>
+
+    <Button @click="router.navigate('/user/login')">
+      goto login
+    </Button>
+  </ion-page>
 </template>
 
 <style scoped lang="scss">
