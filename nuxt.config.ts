@@ -14,4 +14,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-icons',
   ],
+  runtimeConfig: {
+    authTokenKey: process.env.AUTH_TOKEN_KEY ?? 'simple-fishing-default-auth-token-key'
+  }
 })
