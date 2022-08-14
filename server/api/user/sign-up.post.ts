@@ -1,4 +1,4 @@
-import { defineEventHandler, useBody, sendError, createError } from 'h3'
+import { defineEventHandler, useBody, sendError, createError, setCookie } from 'h3'
 import fs from 'fs'
 
 export interface SignUpBody {
@@ -25,6 +25,8 @@ export default defineEventHandler(async (event) => {
     data: 'Username is already takes'
   }))
   else fs.writeFileSync('./.output/server/users.json', JSON.stringify([...users, { name, password }]))
+
+  setCookie(event, 'token', JSON.stringify(body))
 
   return true
 })
