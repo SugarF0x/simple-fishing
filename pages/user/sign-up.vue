@@ -18,12 +18,11 @@ function submit() {
     } as SignUpBody
   }).catch(e => { error.value = e.data.data })
 }
-
 </script>
 
 <template>
   <ion-page class="wrapper">
-    <div>i am a login page</div>
+    <div>i am a sign up page</div>
 
     <input v-model="login" placeholder="login" type="text">
     <input v-model="password" placeholder="password" type="text">
@@ -31,6 +30,14 @@ function submit() {
     <Button @click="submit" :disabled="!login || !password"> sign up </Button>
 
     <div v-if="error" class="error">{{ JSON.stringify(error, null, 2) }}</div>
+
+    <div> already have an account? </div>
+
+    <NuxtLink to="/user/sign-in" replace>
+      <Button>
+        goto sign in
+      </Button>
+    </NuxtLink>
   </ion-page>
 </template>
 
@@ -48,6 +55,8 @@ function submit() {
   flex-col
   justify-center
   items-center
+
+  bg-gray-800
 }
 
 .error {

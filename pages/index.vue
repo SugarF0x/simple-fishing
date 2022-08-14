@@ -15,9 +15,9 @@ const { data, pending, refresh, error } = await useFetch('/api/user/me')
       {{ JSON.stringify(data, null, 2) }}
     </div>
 
-    <NuxtLink to="/user/login">
+    <NuxtLink to="/user/sign-in">
       <Button>
-        goto login with nuxt
+        goto login
       </Button>
     </NuxtLink>
   </ion-page>
@@ -31,5 +31,7 @@ const { data, pending, refresh, error } = await useFetch('/api/user/me')
   flex-col
   justify-center
   items-center
+
+  bg-gray-800
 }
 </style>
