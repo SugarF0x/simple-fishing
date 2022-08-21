@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import { NuxtIcon, Button, IonPage } from '#components'
-import { useFetch } from '#app'
+import { UserGetResponse } from '~/server/api/user/me.get'
+import { ref, useIonRouter } from '#imports'
 
-const { data, pending, refresh, error } = await useFetch('/api/user/me')
+const router = useIonRouter()
+
+const data = ref<UserGetResponse | null>()
+
+async function whoami() {
+  data.value = await $fetch('/api/user/me')
+}
+
+async function logout() {
+  await $fetch('/api/user/sign-out')
+  router.replace(location.pathname)
+}
 </script>
 
 <template>
@@ -10,10 +22,11 @@ const { data, pending, refresh, error } = await useFetch('/api/user/me')
     i am a test page
     <nuxt-icon name="fishing-hook" />
 
-    <Button @click="refresh"> i am a button </Button>
-    <div v-if="!pending" class="mt-8 text-cyan-300">
+    <Button @click="whoami"> whoami </Button>
+    <div v-if="data" class="mt-8 text-cyan-300">
       {{ JSON.stringify(data, null, 2) }}
     </div>
+    <Button @click="logout"> logout </Button>
 
     <NuxtLink to="/user/sign-in">
       <Button>
