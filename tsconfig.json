@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": [
       "@pinia/nuxt"
-    ]
+    ],
+    "strict": true
   }
 }

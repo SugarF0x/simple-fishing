@@ -1,3 +1,6 @@
+import { CompatibilityEvent, H3Error } from 'h3'
+import 'h3'
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -5,6 +8,10 @@ declare global {
       AUTH_TOKEN_KEY: string
     }
   }
+}
+
+declare module 'h3' {
+  export function sendError(event: CompatibilityEvent, error: Error | H3Error, debug?: boolean): never
 }
 
 export {}
