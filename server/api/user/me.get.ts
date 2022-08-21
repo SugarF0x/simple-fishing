@@ -6,6 +6,6 @@ export interface UserGetResponse {
 
 export default defineEventHandler<UserGetResponse>((event) => {
   return {
-    user: event.context.auth?.user ?? 'UNKNOWN'
+    user: event.context.auth?.password ?? 'UNKNOWN'
   }
 })

@@ -11,6 +11,15 @@ declare global {
 }
 
 declare module 'h3' {
+  export interface CompatibilityEvent {
+    context: {
+      auth?: {
+        user: string
+        password: string
+      }
+    }
+  }
+
   export function sendError(event: CompatibilityEvent, error: Error | H3Error, debug?: boolean): never
 }
 
