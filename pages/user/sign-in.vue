@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { ref } from '#imports'
 import { Button, IonPage } from '#components'
+import { useIonRouter } from '@ionic/vue'
+
+const router = useIonRouter()
 
 const login = ref('')
 const password = ref('')
-const error = ref<any>(null)
+const error = ref<null | string>(null)
 
-function submit() {
-  error.value = 'sign in method not implemented'
-  // $fetch('/api/user/sign-up', {
-  //   method: 'POST',
-  //   body: {
-  //     name: login.value,
-  //     password: password.value
-  //   } as SignUpBody
-  // }).catch(e => { error.value = e.data.data })
+async function submit() {
+  error.value = null
+
+  const isSuccess = await $fetch('/api/user/sign-in', {
+    method: 'POST',
+    body: {
+      name: login.value,
+      password: password.value
+    }
+  }).catch(e => { error.value = e.data.data })
+
+  if (isSuccess) router.push('/')
 }
 </script>
 

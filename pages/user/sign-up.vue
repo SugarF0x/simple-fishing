@@ -3,20 +3,26 @@ import { ref } from '#imports'
 import { Button, IonPage } from '#components'
 import { $fetch } from 'ohmyfetch'
 import { SignUpBody } from '~/server/api/user/sign-up.post'
+import { useIonRouter } from '@ionic/vue'
+
+const router = useIonRouter()
 
 const login = ref('')
 const password = ref('')
 const error = ref<any>(null)
 
-function submit() {
+async function submit() {
   error.value = null
-  $fetch('/api/user/sign-up', {
+
+  const isSuccess = await $fetch('/api/user/sign-up', {
     method: 'POST',
     body: {
       name: login.value,
       password: password.value
     } as SignUpBody
   }).catch(e => { error.value = e.data.data })
+
+  if (isSuccess) router.push('/')
 }
 </script>
 
