@@ -2,6 +2,7 @@
 import { ref } from '#imports'
 import { Button, IonPage } from '#components'
 import { useIonRouter } from '@ionic/vue'
+import { UserData } from '~/server/types'
 
 const router = useIonRouter()
 
@@ -15,9 +16,9 @@ async function submit() {
   const isSuccess = await $fetch('/api/user/sign-in', {
     method: 'POST',
     body: {
-      name: login.value,
+      login: login.value,
       password: password.value
-    }
+    } as UserData
   }).catch(e => { error.value = e.data.data })
 
   if (isSuccess) router.push('/')
