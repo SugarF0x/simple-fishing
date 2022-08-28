@@ -5,7 +5,8 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       NODE_ENV: 'development' | 'production'
-      AUTH_TOKEN_KEY: string
+      NUXT_MONGO_URL: string
+      NUXT_MONGO_NAME: string
     }
   }
 }

@@ -1,25 +1,21 @@
 import { isDevelopment } from 'std-env'
 import { UserData } from '~/server/types'
-import { listUsers } from '~/server/utils'
-import fs from 'fs'
+import { connectMongo, disconnectMongo, getUsersCollection } from '~/server/db'
 
-export function addUser(data: UserData): void {
-  if (isDevelopment) return addUserDev(data)
-  else return addUserProd(data)
+export async function addUser(data: UserData) {
+  if (isDevelopment) return await addUserDev(data)
+  else return await addUserProd(data)
 }
 
-function addUserDev(data: UserData) {
-  const users = listUsers()
+async function addUserDev(data: UserData) {
+  const collection = getUsersCollection(await connectMongo())
 
-  try {
-    fs.writeFileSync('./.output/server/users.json', JSON.stringify([...users, data], null, 2))
-  } catch (e) {
-    console.error('Failed writing users file')
-  }
+  await collection.insertOne(data)
 
+  await disconnectMongo()
   return
 }
 
-function addUserProd(data: UserData) {
+async function addUserProd(data: UserData) {
   return
 }

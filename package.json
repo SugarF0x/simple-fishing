@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.3.1",
+    "mongodb": "^4.9.0",
     "nuxt-icons": "^2.0.1"
   }
 }

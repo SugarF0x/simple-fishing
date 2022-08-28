@@ -11,13 +11,13 @@ export default defineEventHandler(async (event) => {
     data: 'name or password missing from body'
   }))
 
-  const foundUser = getUser(login)
+  const foundUser = await getUser(login)
 
   if (foundUser) sendError(event, createError({
     statusCode: 400,
     data: 'Username is already takes'
   }))
-  else addUser(body)
+  else await addUser(body)
 
   setCookie(event, 'token', JSON.stringify(body))
 

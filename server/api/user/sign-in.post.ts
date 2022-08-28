@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     data: 'name or password missing from body'
   }))
 
-  const foundUser = getUser(login)
+  const foundUser = await getUser(login)
 
   if (!foundUser) sendError(event, createError({
     statusCode: 404,

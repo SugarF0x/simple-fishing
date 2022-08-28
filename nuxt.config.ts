@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     'nuxt-icons',
   ],
   runtimeConfig: {
-    authTokenKey: process.env.AUTH_TOKEN_KEY ?? 'simple-fishing-default-auth-token-key'
+    mongoUrl: process.env.NUXT_MONGO_URL ?? 'mongodb://localhost:27017',
+    mongoName: process.env.NUXT_MONGO_NAME ?? 'simple-fishing'
   }
 })

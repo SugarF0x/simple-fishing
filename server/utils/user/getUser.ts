@@ -1,21 +1,21 @@
 import { isDevelopment } from 'std-env'
 import { UserData } from '~/server/types'
-import { listUsers } from '~/server/utils'
+import { connectMongo, disconnectMongo, getUsersCollection } from '~/server/db'
 
-export function getUser(login: string) {
-  if (isDevelopment) return getUserDev(login)
-  return getUserProd(login)
+export async function getUser(login: string) {
+  if (isDevelopment) return await getUserDev(login)
+  return await getUserProd(login)
 }
 
-function getUserDev(login: string): UserData | null {
-  let users = listUsers()
+async function getUserDev(login: string): Promise<UserData | null> {
+  const collection = getUsersCollection(await connectMongo())
 
-  const user = users.find(entry => entry.login === login)
-  if (!user) return null
+  const user = await collection.findOne({ login })
 
+  await disconnectMongo()
   return user
 }
 
-function getUserProd(login: string): UserData | null {
+async function getUserProd(login: string): Promise<UserData | null> {
   return null
 }

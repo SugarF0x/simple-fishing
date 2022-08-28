@@ -1,26 +1,22 @@
 import { isDevelopment } from 'std-env'
 import { UserData } from '~/server/types'
-import fs from 'fs'
+import { connectMongo, disconnectMongo, getUsersCollection } from '~/server/db'
+import { FindCursor } from 'mongodb'
 
-export function listUsers(): UserData[] {
-  if (isDevelopment) return listUsersDev()
-  else return listUsersProd()
+export async function listUsers(): Promise<FindCursor<UserData>> {
+  if (isDevelopment) return await listUsersDev()
+  else return await listUsersProd()
 }
 
-function listUsersDev() {
-  let users: UserData[] = []
+async function listUsersDev() {
+  const collection = getUsersCollection(await connectMongo())
 
-  try {
-    users = JSON.parse(fs.readFileSync('./.output/server/users.json', 'utf-8'))
-  } catch (e) {
-    console.error('Failed to fetch users file, returning empty array')
-    console.error(e)
-    return []
-  }
+  const users = await collection.find({})
 
+  await disconnectMongo()
   return users
 }
 
-function listUsersProd() {
-  return []
+async function listUsersProd() {
+  return new FindCursor()
 }
